@@ -21,8 +21,9 @@
 * 阿里云免费试用3个月，新老用户7折优惠：https://www.aliyun.com/minisite/goods?userCode=zm2iaoye
   需要后端代码请打开微信搜索公众号关注 “不凋不败” 或微信扫面下方二维码关注微信公众号发送 "后端源码" 即可获取
 
+![公众号不凋不败](https://github.com/user-attachments/assets/369a6a91-b43a-4ada-acbb-c58aae2f698d)
 
-![公众号"不凋不败"](<https://i.postimg.cc/26ydjFJV/image.png>)
+
 
 
 
