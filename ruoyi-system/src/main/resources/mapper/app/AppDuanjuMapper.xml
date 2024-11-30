@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppDuanjuMapper">
+    
+    <resultMap type="AppDuanju" id="AppDuanjuResult">
+        <result property="id"    column="id"    />
+        <result property="bjName"    column="bj_name"    />
+        <result property="djUrl"    column="dj_url"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectAppDuanjuVo">
+        select id, bj_name, dj_url, create_time from app_duanju
+    </sql>
+
+    <select id="selectAppDuanjuList" parameterType="AppDuanju" resultMap="AppDuanjuResult">
+        <include refid="selectAppDuanjuVo"/>
+        <where>  
+            <if test="bjName != null  and bjName != ''"> and bj_name like concat('%', #{bjName}, '%')</if>
+            <if test="djUrl != null  and djUrl != ''"> and dj_url like concat('%', #{djUrl}, '%')</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppDuanjuById" parameterType="Long" resultMap="AppDuanjuResult">
+        <include refid="selectAppDuanjuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppDuanju" parameterType="AppDuanju" useGeneratedKeys="true" keyProperty="id">
+        insert into app_duanju
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bjName != null">bj_name,</if>
+            <if test="djUrl != null">dj_url,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bjName != null">#{bjName},</if>
+            <if test="djUrl != null">#{djUrl},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppDuanju" parameterType="AppDuanju">
+        update app_duanju
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bjName != null">bj_name = #{bjName},</if>
+            <if test="djUrl != null">dj_url = #{djUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppDuanjuById" parameterType="Long">
+        delete from app_duanju where id = #{id}
+    </delete>
+
+    <delete id="deleteAppDuanjuByIds" parameterType="String">
+        delete from app_duanju where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppWallpaperMapper">
+
+    <resultMap type="AppWallpaper" id="AppWallpaperResult">
+        <result property="id"    column="id"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="isAd"    column="is_ad"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="downNum"    column="down_num"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="wallpaperType"    column="wallpaper_type"    />
+        <result property="weight"    column="weight"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="compressImgUrl"    column="compress_img_url"    />
+    </resultMap>
+
+    <sql id="selectAppWallpaperVo">
+        select id, img_url, is_ad, is_show, down_num, keyword, wallpaper_type, weight, create_time, compress_img_url from app_wallpaper
+    </sql>
+
+    <select id="selectAppWallpaperList" parameterType="AppWallpaper" resultMap="AppWallpaperResult">
+        <include refid="selectAppWallpaperVo"/>
+        <where>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="isAd != null "> and is_ad = #{isAd}</if>
+            <if test="isShow != null  and isShow != ''"> and is_show = #{isShow}</if>
+            <if test="downNum != null  and downNum != ''"> and down_num = #{downNum}</if>
+            <if test="keyword != null  and keyword != ''"> and keyword like concat('%', #{keyword}, '%')</if>
+            <if test="wallpaperType != null "> and wallpaper_type = #{wallpaperType}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+        </where> ORDER BY weight desc, create_time desc
+    </select>
+
+    <select id="selectAppWallpaperById" parameterType="Long" resultMap="AppWallpaperResult">
+        <include refid="selectAppWallpaperVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAppWallpaper" parameterType="AppWallpaper" useGeneratedKeys="true" keyProperty="id">
+        insert into app_wallpaper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null and imgUrl != ''">img_url,</if>
+            <if test="isAd != null">is_ad,</if>
+            <if test="isShow != null and isShow != ''">is_show,</if>
+            <if test="downNum != null">down_num,</if>
+            <if test="keyword != null and keyword != ''">keyword,</if>
+            <if test="wallpaperType != null">wallpaper_type,</if>
+            <if test="weight != null">weight,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="compressImgUrl != null">compress_img_url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null and imgUrl != ''">#{imgUrl},</if>
+            <if test="isAd != null">#{isAd},</if>
+            <if test="isShow != null and isShow != ''">#{isShow},</if>
+            <if test="downNum != null">#{downNum},</if>
+            <if test="keyword != null and keyword != ''">#{keyword},</if>
+            <if test="wallpaperType != null">#{wallpaperType},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="compressImgUrl != null">#{compressImgUrl},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppWallpaper" parameterType="AppWallpaper">
+        update app_wallpaper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
+            <if test="isAd != null">is_ad = #{isAd},</if>
+            <if test="isShow != null and isShow != ''">is_show = #{isShow},</if>
+            <if test="downNum != null">down_num = #{downNum},</if>
+            <if test="keyword != null and keyword != ''">keyword = #{keyword},</if>
+            <if test="wallpaperType != null">wallpaper_type = #{wallpaperType},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="compressImgUrl != null">compress_img_url = #{compressImgUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppWallpaperById" parameterType="Long">
+        delete from app_wallpaper where id = #{id}
+    </delete>
+
+    <delete id="deleteAppWallpaperByIds" parameterType="String">
+        delete from app_wallpaper where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

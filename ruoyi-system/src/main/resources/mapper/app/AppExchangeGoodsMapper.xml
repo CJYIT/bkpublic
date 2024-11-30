@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppExchangeGoodsMapper">
+    
+    <resultMap type="AppExchangeGoods" id="AppExchangeGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="goodsImg"    column="goods_img"    />
+        <result property="goodsType"    column="goods_type"    />
+        <result property="goodsExchange"    column="goods_exchange"    />
+        <result property="isHot"    column="is_hot"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="isCami"    column="is_cami"    />
+        <result property="camiType"    column="cami_type"    />
+    </resultMap>
+
+    <sql id="selectAppExchangeGoodsVo">
+        select id, goods_name, goods_img, goods_type, goods_exchange, is_hot, del_flag, create_by, create_time, remark, is_cami, cami_type from app_exchange_goods
+    </sql>
+
+    <select id="selectAppExchangeGoodsList" parameterType="AppExchangeGoods" resultMap="AppExchangeGoodsResult">
+        <include refid="selectAppExchangeGoodsVo"/>
+        <where>  
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="goodsImg != null  and goodsImg != ''"> and goods_img = #{goodsImg}</if>
+            <if test="goodsType != null "> and goods_type = #{goodsType}</if>
+            <if test="goodsExchange != null "> and goods_exchange = #{goodsExchange}</if>
+            <if test="isHot != null "> and is_hot = #{isHot}</if>
+            <if test="isCami != null "> and is_cami = #{isCami}</if>
+            <if test="camiType != null "> and cami_type = #{camiType}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppExchangeGoodsById" parameterType="Long" resultMap="AppExchangeGoodsResult">
+        <include refid="selectAppExchangeGoodsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppExchangeGoods" parameterType="AppExchangeGoods" useGeneratedKeys="true" keyProperty="id">
+        insert into app_exchange_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">goods_name,</if>
+            <if test="goodsImg != null and goodsImg != ''">goods_img,</if>
+            <if test="goodsType != null">goods_type,</if>
+            <if test="goodsExchange != null">goods_exchange,</if>
+            <if test="isHot != null">is_hot,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="isCami != null">is_cami,</if>
+            <if test="camiType != null">cami_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">#{goodsName},</if>
+            <if test="goodsImg != null and goodsImg != ''">#{goodsImg},</if>
+            <if test="goodsType != null">#{goodsType},</if>
+            <if test="goodsExchange != null">#{goodsExchange},</if>
+            <if test="isHot != null">#{isHot},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isCami != null">#{isCami},</if>
+            <if test="camiType != null">#{camiType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppExchangeGoods" parameterType="AppExchangeGoods">
+        update app_exchange_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsName != null and goodsName != ''">goods_name = #{goodsName},</if>
+            <if test="goodsImg != null and goodsImg != ''">goods_img = #{goodsImg},</if>
+            <if test="goodsType != null">goods_type = #{goodsType},</if>
+            <if test="goodsExchange != null">goods_exchange = #{goodsExchange},</if>
+            <if test="isHot != null">is_hot = #{isHot},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="isCami != null">is_cami = #{isCami},</if>
+            <if test="camiType != null">cami_type = #{camiType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppExchangeGoodsById" parameterType="Long">
+        delete from app_exchange_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteAppExchangeGoodsByIds" parameterType="String">
+        delete from app_exchange_goods where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppCamiMapper">
+    
+    <resultMap type="AppCami" id="AppCamiResult">
+        <result property="id"    column="id"    />
+        <result property="cami"    column="cami"    />
+        <result property="camiTyep"    column="cami_tyep"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <sql id="selectAppCamiVo">
+        select id, cami, cami_tyep, create_time, del_flag from app_cami
+    </sql>
+
+    <select id="selectAppCamiList" parameterType="AppCami" resultMap="AppCamiResult">
+        <include refid="selectAppCamiVo"/>
+        <where>  
+            <if test="cami != null  and cami != ''"> and cami = #{cami}</if>
+            <if test="camiTyep != null "> and cami_tyep = #{camiTyep}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="delFlag != null "> and del_flag = #{delFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppCamiById" parameterType="Long" resultMap="AppCamiResult">
+        <include refid="selectAppCamiVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppCami" parameterType="AppCami" useGeneratedKeys="true" keyProperty="id">
+        insert into app_cami
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cami != null">cami,</if>
+            <if test="camiTyep != null">cami_tyep,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cami != null">#{cami},</if>
+            <if test="camiTyep != null">#{camiTyep},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppCami" parameterType="AppCami">
+        update app_cami
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cami != null">cami = #{cami},</if>
+            <if test="camiTyep != null">cami_tyep = #{camiTyep},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppCamiById" parameterType="Long">
+        delete from app_cami where id = #{id}
+    </delete>
+
+    <delete id="deleteAppCamiByIds" parameterType="String">
+        delete from app_cami where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

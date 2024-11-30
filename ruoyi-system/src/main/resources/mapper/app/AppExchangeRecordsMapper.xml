@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppExchangeRecordsMapper">
+
+    <resultMap type="AppExchangeRecords" id="AppExchangeRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="recordsUserId"    column="records_user_id"    />
+        <result property="recordsNumber"    column="records_number"    />
+        <result property="recordsTime"    column="records_time"    />
+        <result property="redemptionCode"    column="redemption_code"    />
+        <result property="redemptionState"    column="redemption_state"    />
+    </resultMap>
+
+    <sql id="selectAppExchangeRecordsVo">
+        select id, goods_name, records_user_id, records_number, records_time, redemption_code, redemption_state from app_exchange_records
+    </sql>
+
+    <select id="selectAppExchangeRecordsList" parameterType="AppExchangeRecords" resultMap="AppExchangeRecordsResult">
+        <include refid="selectAppExchangeRecordsVo"/>
+        <where>
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="recordsUserId != null "> and records_user_id = #{recordsUserId}</if>
+            <if test="recordsNumber != null "> and records_number = #{recordsNumber}</if>
+            <if test="recordsTime != null "> and records_time = #{recordsTime}</if>
+            <if test="redemptionCode != null  and redemptionCode != ''"> and redemption_code = #{redemptionCode}</if>
+            <if test="redemptionState != null  and redemptionState != ''"> and redemption_state = #{redemptionState}</if>
+        </where>ORDER BY records_time desc
+    </select>
+
+    <select id="selectAppExchangeRecordsById" parameterType="Long" resultMap="AppExchangeRecordsResult">
+        <include refid="selectAppExchangeRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAppExchangeRecords" parameterType="AppExchangeRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into app_exchange_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null">goods_name,</if>
+            <if test="recordsUserId != null">records_user_id,</if>
+            <if test="recordsNumber != null">records_number,</if>
+            <if test="recordsTime != null">records_time,</if>
+            <if test="redemptionCode != null">redemption_code,</if>
+            <if test="redemptionState != null">redemption_state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsName != null">#{goodsName},</if>
+            <if test="recordsUserId != null">#{recordsUserId},</if>
+            <if test="recordsNumber != null">#{recordsNumber},</if>
+            <if test="recordsTime != null">#{recordsTime},</if>
+            <if test="redemptionCode != null">#{redemptionCode},</if>
+            <if test="redemptionState != null">#{redemptionState},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppExchangeRecords" parameterType="AppExchangeRecords">
+        update app_exchange_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsName != null">goods_name = #{goodsName},</if>
+            <if test="recordsUserId != null">records_user_id = #{recordsUserId},</if>
+            <if test="recordsNumber != null">records_number = #{recordsNumber},</if>
+            <if test="recordsTime != null">records_time = #{recordsTime},</if>
+            <if test="redemptionCode != null">redemption_code = #{redemptionCode},</if>
+            <if test="redemptionState != null">redemption_state = #{redemptionState},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppExchangeRecordsById" parameterType="Long">
+        delete from app_exchange_records where id = #{id}
+    </delete>
+
+    <delete id="deleteAppExchangeRecordsByIds" parameterType="String">
+        delete from app_exchange_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

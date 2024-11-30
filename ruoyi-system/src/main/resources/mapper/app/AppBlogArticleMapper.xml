@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppBlogArticleMapper">
+    
+    <resultMap type="AppBlogArticle" id="AppBlogArticleResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="contentInfo"    column="content_info"    />
+        <result property="articleType"    column="article_type"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="showImg"    column="show_img"    />
+        <result property="appResourceId"    column="app_resource_id"    />
+        <result property="lookNumber"    column="look_number"    />
+        <result property="loveNumber"    column="love_number"    />
+        <result property="isRecommendation"    column="is_recommendation"    />
+        <result property="isShow"    column="is_show"    />
+        <result property="isAd"    column="is_ad"    />
+        <result property="adNumber"    column="ad_number"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="weight"    column="weight"    />
+    </resultMap>
+
+    <sql id="selectAppBlogArticleVo">
+        select id, title, content_info, article_type, keyword, show_img, app_resource_id, look_number, weight, love_number, is_recommendation, is_show, is_ad, ad_number, del_flag, create_by, create_time, remark from app_blog_article
+    </sql>
+
+    <select id="selectAppBlogArticleList" parameterType="AppBlogArticle" resultMap="AppBlogArticleResult">
+        <include refid="selectAppBlogArticleVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="contentInfo != null  and contentInfo != ''"> and content_info like concat('%', #{contentInfo}, '%')</if>
+            <if test="articleType != null "> and article_type = #{articleType}</if>
+            <if test="appResourceId != null "> and app_resource_id = #{appResourceId}</if>
+            <if test="isRecommendation != null "> and is_recommendation = #{isRecommendation}</if>
+            <if test="isShow != null "> and is_show = #{isShow}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="keyword != null  and keyword != ''"> and (keyword like concat('%', #{keyword}, '%') or title like concat('%', #{keyword}, '%'))</if>
+        </where>
+        <choose>
+            <when test="orderType == 'look_number'"> ORDER BY look_number desc, create_time desc</when >
+            <otherwise> ORDER BY weight desc, create_time desc</otherwise >
+        </choose>
+    </select>
+    
+    <select id="selectAppBlogArticleById" parameterType="Long" resultMap="AppBlogArticleResult">
+        <include refid="selectAppBlogArticleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppBlogArticle" parameterType="AppBlogArticle" useGeneratedKeys="true" keyProperty="id">
+        insert into app_blog_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="contentInfo != null">content_info,</if>
+            <if test="articleType != null">article_type,</if>
+            <if test="keyword != null and keyword != ''">keyword,</if>
+            <if test="showImg != null">show_img,</if>
+            <if test="appResourceId != null">app_resource_id,</if>
+            <if test="lookNumber != null">look_number,</if>
+            <if test="loveNumber != null">love_number,</if>
+            <if test="isRecommendation != null">is_recommendation,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="isAd != null">is_ad,</if>
+            <if test="adNumber != null">ad_number,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="weight != null">weight,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="contentInfo != null">#{contentInfo},</if>
+            <if test="articleType != null">#{articleType},</if>
+            <if test="keyword != null and keyword != ''">#{keyword},</if>
+            <if test="showImg != null">#{showImg},</if>
+            <if test="appResourceId != null">#{appResourceId},</if>
+            <if test="lookNumber != null">#{lookNumber},</if>
+            <if test="loveNumber != null">#{loveNumber},</if>
+            <if test="isRecommendation != null">#{isRecommendation},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="isAd != null">#{isAd},</if>
+            <if test="adNumber != null">#{adNumber},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="weight != null">#{weight},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppBlogArticle" parameterType="AppBlogArticle">
+        update app_blog_article
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="contentInfo != null">content_info = #{contentInfo},</if>
+            <if test="articleType != null">article_type = #{articleType},</if>
+            <if test="keyword != null and keyword != ''">keyword = #{keyword},</if>
+            <if test="showImg != null">show_img = #{showImg},</if>
+            <if test="appResourceId != null">app_resource_id = #{appResourceId},</if>
+            <if test="lookNumber != null">look_number = #{lookNumber},</if>
+            <if test="loveNumber != null">love_number = #{loveNumber},</if>
+            <if test="isRecommendation != null">is_recommendation = #{isRecommendation},</if>
+            <if test="isShow != null">is_show = #{isShow},</if>
+            <if test="isAd != null">is_ad = #{isAd},</if>
+            <if test="adNumber != null">ad_number = #{adNumber},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="weight != null">weight = #{weight},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppBlogArticleById" parameterType="Long">
+        delete from app_blog_article where id = #{id}
+    </delete>
+
+    <delete id="deleteAppBlogArticleByIds" parameterType="String">
+        delete from app_blog_article where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

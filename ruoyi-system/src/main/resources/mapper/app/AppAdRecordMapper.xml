@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppAdRecordMapper">
+    
+    <resultMap type="AppAdRecord" id="AppAdRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="integralTime"    column="integral_time"    />
+        <result property="adType"    column="ad_type"    />
+    </resultMap>
+
+    <sql id="selectAppAdRecordVo">
+        select id, user_id, integral_time, ad_type from app_ad_record
+    </sql>
+
+    <select id="selectAppAdRecordList" parameterType="AppAdRecord" resultMap="AppAdRecordResult">
+        <include refid="selectAppAdRecordVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="integralTime != null "> and integral_time = #{integralTime}</if>
+            <if test="adType != null "> and ad_type = #{adType}</if>
+        </where>
+    </select>
+    
+    <select id="selectAppAdRecordById" parameterType="Long" resultMap="AppAdRecordResult">
+        <include refid="selectAppAdRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppAdRecord" parameterType="AppAdRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into app_ad_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="integralTime != null">integral_time,</if>
+            <if test="adType != null">ad_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="integralTime != null">#{integralTime},</if>
+            <if test="adType != null">#{adType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppAdRecord" parameterType="AppAdRecord">
+        update app_ad_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="integralTime != null">integral_time = #{integralTime},</if>
+            <if test="adType != null">ad_type = #{adType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppAdRecordById" parameterType="Long">
+        delete from app_ad_record where id = #{id}
+    </delete>
+
+    <delete id="deleteAppAdRecordByIds" parameterType="String">
+        delete from app_ad_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

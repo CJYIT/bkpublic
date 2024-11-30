@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.NewDownloadUrlMapper">
+    
+    <resultMap type="NewDownloadUrl" id="NewDownloadUrlResult">
+        <result property="id"    column="id"    />
+        <result property="httpUrl"    column="http_url"    />
+    </resultMap>
+
+    <sql id="selectNewDownloadUrlVo">
+        select id, http_url from new_download_url
+    </sql>
+
+    <select id="selectNewDownloadUrlList" parameterType="NewDownloadUrl" resultMap="NewDownloadUrlResult">
+        <include refid="selectNewDownloadUrlVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectNewDownloadUrlById" parameterType="Long" resultMap="NewDownloadUrlResult">
+        <include refid="selectNewDownloadUrlVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertNewDownloadUrl" parameterType="NewDownloadUrl" useGeneratedKeys="true" keyProperty="id">
+        insert into new_download_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="httpUrl != null">http_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="httpUrl != null">#{httpUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNewDownloadUrl" parameterType="NewDownloadUrl">
+        update new_download_url
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="httpUrl != null">http_url = #{httpUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNewDownloadUrlById" parameterType="Long">
+        delete from new_download_url where id = #{id}
+    </delete>
+
+    <delete id="deleteNewDownloadUrlByIds" parameterType="String">
+        delete from new_download_url where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

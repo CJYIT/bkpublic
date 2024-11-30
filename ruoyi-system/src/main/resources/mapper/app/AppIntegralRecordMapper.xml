@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppIntegralRecordMapper">
+    
+    <resultMap type="AppIntegralRecord" id="AppIntegralRecordResult">
+        <result property="id"    column="id"    />
+        <result property="source"    column="source"    />
+        <result property="isAdd"    column="is_add"    />
+        <result property="integralNumber"    column="integral_number"    />
+        <result property="userId"    column="user_id"    />
+        <result property="integralTime"    column="integral_time"    />
+    </resultMap>
+
+    <sql id="selectAppIntegralRecordVo">
+        select id, source, is_add, integral_number, user_id, integral_time from app_integral_record
+    </sql>
+
+    <select id="selectAppIntegralRecordList" parameterType="AppIntegralRecord" resultMap="AppIntegralRecordResult">
+        <include refid="selectAppIntegralRecordVo"/>
+        <where>  
+            <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
+            <if test="isAdd != null "> and is_add = #{isAdd}</if>
+            <if test="integralNumber != null "> and integral_number = #{integralNumber}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="integralTime != null ">
+                AND date_format(integral_time,'%y%m%d') = date_format(#{integralTime},'%y%m%d')
+            </if>
+        </where> ORDER BY integral_time desc
+    </select>
+
+    <select id="selectAppIntegralRecordCount" parameterType="AppIntegralRecord" resultType="int">
+        SELECT COUNT(0) FROM app_integral_record
+        <where>
+            <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
+            <if test="isAdd != null "> and is_add = #{isAdd}</if>
+            <if test="integralNumber != null "> and integral_number = #{integralNumber}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="integralTime != null ">  AND date_format(integral_time,'%y%m%d') = date_format(#{integralTime},'%y%m%d')</if>
+        </where>
+    </select>
+    
+    <select id="selectAppIntegralRecordById" parameterType="Long" resultMap="AppIntegralRecordResult">
+        <include refid="selectAppIntegralRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertAppIntegralRecord" parameterType="AppIntegralRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into app_integral_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="source != null">source,</if>
+            <if test="isAdd != null">is_add,</if>
+            <if test="integralNumber != null">integral_number,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="integralTime != null">integral_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="source != null">#{source},</if>
+            <if test="isAdd != null">#{isAdd},</if>
+            <if test="integralNumber != null">#{integralNumber},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="integralTime != null">#{integralTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppIntegralRecord" parameterType="AppIntegralRecord">
+        update app_integral_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="source != null">source = #{source},</if>
+            <if test="isAdd != null">is_add = #{isAdd},</if>
+            <if test="integralNumber != null">integral_number = #{integralNumber},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="integralTime != null">integral_time = #{integralTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppIntegralRecordById" parameterType="Long">
+        delete from app_integral_record where id = #{id}
+    </delete>
+
+    <delete id="deleteAppIntegralRecordByIds" parameterType="String">
+        delete from app_integral_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

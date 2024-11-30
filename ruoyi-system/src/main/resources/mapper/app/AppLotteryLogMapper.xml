@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppLotteryLogMapper">
+    
+    <resultMap type="AppLotteryLog" id="AppLotteryLogResult">
+        <result property="id"    column="id"    />
+        <result property="goodId"    column="good_id"    />
+        <result property="lotteryUserId"    column="lottery_user_id"    />
+        <result property="lotteryTime"    column="lottery_time"    />
+        <result property="name"    column="name"    />
+    </resultMap>
+
+    <sql id="selectAppLotteryLogVo">
+        select a.id, good_id, lottery_user_id, lottery_time,b.`name` from app_lottery_log a left join app_lottery_goods b on a.good_id = b.id
+    </sql>
+
+    <select id="selectAppLotteryLogList" parameterType="AppLotteryLog" resultMap="AppLotteryLogResult">
+        <include refid="selectAppLotteryLogVo"/>
+        <where>  
+            <if test="goodId != null "> and good_id = #{goodId}</if>
+            <if test="lotteryUserId != null "> and lottery_user_id = #{lotteryUserId}</if>
+            <if test="lotteryTime != null "> and lottery_time = #{lotteryTime}</if>
+        </where> ORDER BY lottery_time desc
+    </select>
+    
+    <select id="selectAppLotteryLogById" parameterType="Long" resultMap="AppLotteryLogResult">
+        <include refid="selectAppLotteryLogVo"/>
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertAppLotteryLog" parameterType="AppLotteryLog" useGeneratedKeys="true" keyProperty="id">
+        insert into app_lottery_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">good_id,</if>
+            <if test="lotteryUserId != null">lottery_user_id,</if>
+            <if test="lotteryTime != null">lottery_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">#{goodId},</if>
+            <if test="lotteryUserId != null">#{lotteryUserId},</if>
+            <if test="lotteryTime != null">#{lotteryTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAppLotteryLog" parameterType="AppLotteryLog">
+        update app_lottery_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodId != null">good_id = #{goodId},</if>
+            <if test="lotteryUserId != null">lottery_user_id = #{lotteryUserId},</if>
+            <if test="lotteryTime != null">lottery_time = #{lotteryTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppLotteryLogById" parameterType="Long">
+        delete from app_lottery_log where id = #{id}
+    </delete>
+
+    <delete id="deleteAppLotteryLogByIds" parameterType="String">
+        delete from app_lottery_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

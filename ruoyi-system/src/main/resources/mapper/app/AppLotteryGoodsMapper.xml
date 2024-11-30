@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.app.mapper.AppLotteryGoodsMapper">
+
+    <resultMap type="AppLotteryGoods" id="AppLotteryGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="image"    column="image"    />
+        <result property="name"    column="name"    />
+        <result property="percentage"    column="percentage"    />
+        <result property="reward"    column="reward"    />
+        <result property="indexNum"    column="index_num"    />
+    </resultMap>
+
+    <sql id="selectAppLotteryGoodsVo">
+        select id, image, name, percentage, reward, index_num from app_lottery_goods
+    </sql>
+
+    <select id="selectAppLotteryGoodsList" parameterType="AppLotteryGoods" resultMap="AppLotteryGoodsResult">
+        <include refid="selectAppLotteryGoodsVo"/>
+        <where>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="percentage != null "> and percentage = #{percentage}</if>
+            <if test="reward != null "> and reward = #{reward}</if>
+            <if test="indexNum != null "> and index_num = #{indexNum}</if>
+        </where>
+    </select>
+
+    <select id="selectAppLotteryGoodsById" parameterType="Long" resultMap="AppLotteryGoodsResult">
+        <include refid="selectAppLotteryGoodsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAppLotteryGoods" parameterType="AppLotteryGoods">
+        insert into app_lottery_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="image != null">image,</if>
+            <if test="name != null">name,</if>
+            <if test="percentage != null">percentage,</if>
+            <if test="reward != null">reward,</if>
+            <if test="indexNum != null">index_num,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="image != null">#{image},</if>
+            <if test="name != null">#{name},</if>
+            <if test="percentage != null">#{percentage},</if>
+            <if test="reward != null">#{reward},</if>
+            <if test="indexNum != null">#{indexNum},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppLotteryGoods" parameterType="AppLotteryGoods">
+        update app_lottery_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="image != null">image = #{image},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="percentage != null">percentage = #{percentage},</if>
+            <if test="reward != null">reward = #{reward},</if>
+            <if test="indexNum != null">index_num = #{indexNum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAppLotteryGoodsById" parameterType="Long">
+        delete from app_lottery_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteAppLotteryGoodsByIds" parameterType="String">
+        delete from app_lottery_goods where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
