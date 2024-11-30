@@ -21,17 +21,16 @@
 * 阿里云免费试用3个月，新老用户7折优惠：https://www.aliyun.com/minisite/goods?userCode=zm2iaoye
   需要后端代码请打开微信搜索公众号关注 “不凋不败” 或微信扫面下方二维码关注微信公众号发送 "后端源码" 即可获取
 
-[![image.png](https://i.postimg.cc/26ydjFJV/image.png)](https://postimg.cc/TL85CmT6)
+https://i.postimg.cc/26ydjFJV/image.png
 
 
 
 后台网站首页
 
-![](reimgs\后台系统.png)
+https://i.postimg.cc/9MkdDw51/image.png
 
 
-
-![](reimgs\后台管理.png)
+https://i.postimg.cc/9MkdDw51/image.png
 
 ## 技术文档
 
@@ -41,9 +40,9 @@
 - 前端运行请进入根目录的 budiao-blog-ui 文价夹下先安装依赖运行命令 npm install --registry=https://registry.npmmirror.com 然后本地开发运行 npm run dev 启动好后打开浏览器，输入：(http://localhost:80 (opens new window)) 默认账户/密码 admin/admin123）即可访问
 - 如问题欢迎联系作者QQ： 2922064790 或 微信：a223312
 - 微信小程序端页面：
-- ![微信小程序端页面](reimgs\微信小程序页面01.png)
-- ![微信小程序端页面](reimgs\微信小程序页面02.png)
+- https://i.postimg.cc/h4HYwfz9/01.png
+- https://i.postimg.cc/jdP1rtPB/02.png
 - 打开微信扫描下面的小程序码即可体验小程序
 
-![微信小程序](reimgs\微信小程序.jpg)
+https://i.postimg.cc/6TJC0sQv/image.jpg
 
