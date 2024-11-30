@@ -28,11 +28,12 @@
 
 
 后台网站首页
-[![image.png](https://i.postimg.cc/59HGnw04/image.png)](https://postimg.cc/XXbQvBdm)
-https://i.postimg.cc/9MkdDw51/image.png
+![后台系统](https://github.com/user-attachments/assets/ad3cfff7-697b-45c8-a597-4d258863349e)
+后台登录页面
+![后台登录](https://github.com/user-attachments/assets/7b3e7660-e852-4b50-a3a9-8f5da2176494)
+后台管理页面
+![后台管理](https://github.com/user-attachments/assets/8587a672-551a-47d9-b84c-0f5aa8233513)
 
-
-https://i.postimg.cc/9MkdDw51/image.png
 
 ## 技术文档
 
@@ -46,5 +47,6 @@ https://i.postimg.cc/9MkdDw51/image.png
 - https://i.postimg.cc/jdP1rtPB/02.png
 - 打开微信扫描下面的小程序码即可体验小程序
 
-https://i.postimg.cc/6TJC0sQv/image.jpg
+![微信小程序](https://github.com/user-attachments/assets/a577f0cf-e4e0-4024-8943-ecd1831d28d9)
+
 
