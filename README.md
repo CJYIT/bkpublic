@@ -43,14 +43,19 @@
 - 前端运行请进入根目录的 budiao-blog-ui 文价夹下先安装依赖运行命令 npm install --registry=https://registry.npmmirror.com 然后本地开发运行 npm run dev 启动好后打开浏览器，输入：(http://localhost:80 (opens new window)) 默认账户/密码 admin/admin123）即可访问
 - 如问题欢迎联系作者QQ： 2922064790 或 微信：a223312
 - 微信小程序端页面：
+
 首页文章详情页类别页
 ![微信小程序页面01](https://github.com/user-attachments/assets/aac0eedd-d3bf-427d-95cd-a05b85fa05ad)
+
 网盘视频资源文章资源
 ![微信小程序页面02](https://github.com/user-attachments/assets/2fd7df04-b762-4c63-8d82-8956b340d562)
+
 图片资源页面：
 ![图片](https://github.com/user-attachments/assets/1d03fb08-db64-4ce5-9fe2-ffe92b7358d4)
+
 积分及抽奖页面
 ![图片](https://github.com/user-attachments/assets/052aec72-2d49-4ca3-b0be-5c8f56a41a90)
+
 手机电脑壁纸头像下载页面
 ![图片](https://github.com/user-attachments/assets/3b4da462-4cd5-4b0f-9558-2b96cba54454)
 
