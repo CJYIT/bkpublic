@@ -49,6 +49,10 @@
 ![微信小程序页面02](https://github.com/user-attachments/assets/2fd7df04-b762-4c63-8d82-8956b340d562)
 图片资源页面：
 ![图片](https://github.com/user-attachments/assets/1d03fb08-db64-4ce5-9fe2-ffe92b7358d4)
+积分及抽奖页面
+![图片](https://github.com/user-attachments/assets/052aec72-2d49-4ca3-b0be-5c8f56a41a90)
+手机电脑壁纸头像下载页面
+![图片](https://github.com/user-attachments/assets/3b4da462-4cd5-4b0f-9558-2b96cba54454)
 
 - 打开微信扫描下面的小程序码即可体验小程序
 
